@@ -172,6 +172,13 @@ mysqli_close($dbc); // Close the database connection.
 					<label>Number of Members</label></p>
 					<button class="w3-button w3-block w3-amber w3-section w3-padding" type="submit">Add Team</button>
 				</form>
+
+				<?php
+	        if(isset($_POST["NewTeam"])){
+	          header("location: addTeam.php?TeamName={$_POST["TeamName"]}&MemberCount={$_POST["MemberCount"]}");
+	        }
+        ?>
+
 			</div>
 		</div>
 
