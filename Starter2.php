@@ -4,14 +4,14 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	require ('includes/sptr_mysqli_connect.php'); // Connect to the db.
 	$errors = array(); // Initialize an error array.
-	
+
 	// Check for a team name:
 	if (empty($_POST['tc_name'])) {
 		$errors[] = 'You need to enter a team name!';
 	} else {
 		$tcn = mysqli_real_escape_string($dbc, trim($_POST['tc_name']));
 	}
-	
+
 	// Check for number of members:
 	if (empty($_POST['tc_mb'])) {
 		$errors[] = 'You need to state the number of members in the team!';
@@ -20,28 +20,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 
 	if (empty($errors)) { // If everything's OK.
-		
+
 	// Make the query:
 	$q = "INSERT INTO tc_table (tc_name, tc_mb) VALUES ('$tcn', '$tcmb')";
 	$r = @mysqli_query ($dbc, $q); // Run the query.
 	if ($r) { // If it ran OK.
 		// Print a message:
 		echo '<h1>Thank you!</h1>
-		<p>Team has now been registered. !</p><p><br /></p>';	
+		<p>Team has now been registered. !</p><p><br /></p>';
 	} else { // If it did not run OK.
-			
+
 			// Public message:
-			echo '<h1>System Error</h1><p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>'; 
-			
+			echo '<h1>System Error</h1><p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
+
 			// Debugging message:
 			echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
-						
+
 		} // End of if ($r) IF.
 
 mysqli_close($dbc); // Close the database connection.
 		// Include the footer and quit the script:
 	exit();
-		
+
 } else { // Report the errors.
 	echo '<h1>Error!</h1>
 		<p class="error">The following error(s) occurred:<br />';
@@ -50,7 +50,7 @@ mysqli_close($dbc); // Close the database connection.
 	}
 		echo '</p><p>Please try again.</p><p><br /></p>';
 	} // End of if (empty($errors)) IF.
-	
+
 mysqli_close($dbc); // Close the database connection.
 
 } // End of the main Submit conditional.
@@ -101,21 +101,21 @@ mysqli_close($dbc); // Close the database connection.
 					<form class="w3-container w3-padding-16">
 						<label><b> Username</b></label>
 						<input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter Username" name="usrname" required>
-						
+
 						<!--Input username php here -->
-						
+
 						<label><b> Password</b></label>
 						<input class="w3-input w3-border w3-margin-bottom" type="password" placeholder="Enter Password" name="psw" required>
-						
+
 						<!--Input password php here -->
-						
+
 						<button class="w3-button w3-block w3-amber w3-section w3-padding" type="submit">Login</button>
 					</form>
 				</div>
 			</div>
-			
+
 			<div id="Refresh">
-				
+
 			</div>
 			</div>
 		</div>
@@ -157,7 +157,7 @@ mysqli_close($dbc); // Close the database connection.
 		<button onclick="document.getElementById('RemoveTeam').style.display='block'" class="w3-button w3-indigo">Remove Team</button>
 		<button onclick="document.getElementById('EditTeam').style.display='block'" class="w3-button w3-indigo">Edit Team</button>
 		<button onclick="document.getElementById('ShowTeam').style.display='block'" class="w3-button w3-indigo">Show Team List</button>
-		
+
 		<!--Adding an Existing Team-->
 		<div id="AddTeam" class="w3-modal">
 			<div class="w3-modal-content w3-animate-zoom w3-card-4">
@@ -174,7 +174,7 @@ mysqli_close($dbc); // Close the database connection.
 				</form>
 			</div>
 		</div>
-		
+
 		<!--Removing an Existing Team-->
 		<div id="RemoveTeam" class="w3-modal">
 			<div class="w3-modal-content w3-animate-zoom w3-card-4">
@@ -184,9 +184,55 @@ mysqli_close($dbc); // Close the database connection.
 						<h4>Delete which team?</h4>
 					</header>
 					<p>
-						<button onclick="document.getElementById('Prompt1').style.display='block'" class="w3-button w3-ripple w3-amber">Insert Team 1 Name Here</button>
-						<button onclick="document.getElementById('Prompt1').style.display='block'" class="w3-button w3-ripple w3-amber">Insert Team 2 Name Here</button>
-					
+
+						<?php
+		          $sqlHeader = ["Teams"];
+
+							//CHANGE THIS CONTEXT
+		          $sqlQuery = "SELECT teams.tname AS 'name' FROM scoretracker.teams;";
+
+		          $QueryOut = mysqli_Query($connection, $sqlQuery);
+
+		          if(mysqli_num_rows($QueryOut) > 0) {
+		          #get tabulated rows as arrays
+		          $entry = 0;
+		            while($activerow = mysqli_fetch_array($QueryOut)){
+		              #feed data to an array variable
+		              foreach($activerow as $key => $incomingvalue){
+		                //echo $incomingvalue;
+		                $Teams[$entry][$key] = $incomingvalue;
+		              }
+
+		              $entry++;
+		            }
+		          }
+
+		          #count data for table
+		          $Cols = 1;
+		          $Rows = mysqli_num_rows($QueryOut);
+	          ?>
+
+						<table border = "10" cellspacing = "30" cellpadding = "20">
+            <!--This is how data is displayed, please make this look fancy @Dearie-->
+            <?php
+              echo "<tr>";
+              #Print out row headers
+              foreach ($sqlHeader as $out) {
+                  echo "<td>";
+                  echo $out;
+              }
+
+              for($row = 0; $row < $Rows; $row++){
+                echo "<tr>";
+                for($col = 0; $col < $Cols; $col++){
+                  echo "<td>";
+                  $NameOut = $Teams[$row][$col];
+                  echo "<a href='deleteTeam.php?remove={$NameOut}'>$NameOut</a>";
+                }
+              }
+            ?>
+          </table>
+
 						<!--prompt for deleting the team-->
 						<div id="Prompt1" class="w3-modal">
 							<div class="w3-modal-content w3-animate-top w3-card-4" style="max-width:400px">
@@ -194,16 +240,16 @@ mysqli_close($dbc); // Close the database connection.
 									<span onclick="document.getElementById('Prompt1').style.display='none'" class="w3-button w3-indigo w3-xlarge w3-display-topright">&times;</span>
 									<h4>Delete this team?</h4>
 								</header>
-								<form class="w3-container w3-padding-16"">
+								<form class="w3-container w3-padding-16">
 									<button class="w3-button w3-block w3-red w3-section w3-padding" type="submit">Yes</button>
-									
+
 									<!--Insert php file here-->
-									
+
 									<button onclick="document.getElementById('Prompt1').style.display='none'" class="w3-button w3-block w3-blue w3-section w3-padding">No</button>
 								</form>
 							</div>
 						</div>
-						
+
 					</p>
 				</div>
 			</div>
@@ -220,7 +266,7 @@ mysqli_close($dbc); // Close the database connection.
 					<p>
 						<button onclick="document.getElementById('Prompt2').style.display='block'" class="w3-button w3-ripple w3-amber">Insert Team 1 Name Here</button>
 						<button onclick="document.getElementById('Prompt2').style.display='block'" class="w3-button w3-ripple w3-amber">Insert Team 2 Name Here</button>
-					
+
 						<!--prompt for editing the team-->
 						<div id="Prompt2" class="w3-modal">
 							<div class="w3-modal-content w3-animate-top w3-card-4" style="max-width:400px">
@@ -230,30 +276,40 @@ mysqli_close($dbc); // Close the database connection.
 								</header>
 								<form class="w3-container w3-padding-16"">
 									<button class="w3-button w3-block w3-red w3-section w3-padding" type="submit">Yes</button>
-									
+
 									<!--Insert php file here-->
-									
+
 									<button onclick="document.getElementById('Prompt2').style.display='none'" class="w3-button w3-block w3-blue w3-section w3-padding">No</button>
 								</form>
 							</div>
 						</div>
-						
 					</p>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--Showing The Whole List of Teams-->
 		<div id="ShowTeam" class="w3-modal">
 			<div class="w3-modal-content w3-animate-zoom w3-card-4">
 				<div class="w3-container">
-					<header class="w3-container w3-indigo"> 
+					<header class="w3-container w3-indigo">
 						<span onclick="document.getElementById('ShowTeam').style.display='none'" class="w3-button w3-indigo w3-xlarge w3-display-topright">&times;</span>
 						<h4>Team List</h4>
 					</header>
 					<p>
 					<?php
 						require_once 'sptr_mysqli_connect.php';
+
+						//Check for previously accomplished procedures
+					  if(isset($_GET["delete"])){
+					    if($_GET["delete"] == "success"){
+					      echo "<p>Team was successfully deleted</p>";
+					    }
+
+					    else if($_GET["delete"] == "failure"){
+					      echo "<p>Team was not found or not properly deleted</p>";
+					    }
+					  }
 
 						$sqlHeader = ["Teams"];
 						$sqlQuery = "SELECT teams.tname AS 'name' FROM scoretracker.teams;";
@@ -263,7 +319,7 @@ mysqli_close($dbc); // Close the database connection.
 						if(mysqli_num_rows($QueryOut) > 0) {
 							#get tabulated rows as arrays
 							$entry = 0;
-							
+
 							while($activerow = mysqli_fetch_array($QueryOut)) {
 								#feed data to an array variable
 								foreach($activerow as $key => $incomingvalue){
@@ -282,7 +338,7 @@ mysqli_close($dbc); // Close the database connection.
 					?>
 
 					<!--make table look pretty pls-->
-					
+
 					<table>
 					<?php
 					echo "<tr>";
