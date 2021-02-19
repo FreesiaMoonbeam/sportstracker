@@ -6,7 +6,6 @@ $NameOut = $_GET["remove"];
 echo $NameOut;
 
 //Delete team if ID exists
-//CHANGE THIS CONTEXT
 $sqlQuery = "SELECT teams.TeamID AS 'IDToDelete' FROM teams WHERE teams.tname = '{$NameOut}';";
 $QueryOut = mysqli_Query($connection, $sqlQuery);
 
@@ -39,5 +38,3 @@ if($QueryCheck === true){
 else{
   header("location: Starter2.php?delete=failed");
 }
-
-?>
