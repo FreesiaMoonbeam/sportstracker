@@ -9,7 +9,7 @@
       <label>Team/School Name</label></p>
       <p><input class="w3-input" type="text" name = "MemberCount" required>
       <label>Number of Members</label></p>
-      <button onclick="sendQuery()"class="w3-button w3-block w3-amber w3-section w3-padding" type="submit" name = "NewTeam">Add Team</button>
+      <button class="w3-button w3-block w3-amber w3-section w3-padding" type="submit" name = "NewTeam">Add Team</button>
     </form>
   </div>
 </div>
@@ -17,19 +17,26 @@
 <?php
   require_once 'sptr_mysqli_connect.php';
 
-  function sendQuery(){
+  echo "was called";
+
+  if(isset($_GET["NewTeam"])){
     $name = $_GET['TeamName'];
     $memCount = (int)$_GET['MemberCount'];
-    $SQLquery = "INSERT INTO teams (tname, memCount) VALUES ($name, $memCount)";
+
+    $SQLquery = "INSERT INTO teams (tname, memCount) VALUES ('$name', $memCount);";
     $QueryOut = mysqli_query($connection, $SQLquery);
 
+    echo "$name";
+    echo "$memCount";
 
     if($QueryOut === true){
-      header("location: Starter2.php?add=success");
+      echo "working";
+      //header("location: Starter2.php?add=success");
     }
 
     else{
-      header("location: Starter2.php?add=failed");
+      echo ("".mysqli_error($connection));
+      //header("location: Starter2.php?add=failed");
     }
   }
 ?>
