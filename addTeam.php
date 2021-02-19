@@ -26,17 +26,13 @@
     $SQLquery = "INSERT INTO teams (tname, memCount) VALUES ('$name', $memCount);";
     $QueryOut = mysqli_query($connection, $SQLquery);
 
-    echo "$name";
-    echo "$memCount";
-
+    
     if($QueryOut === true){
-      echo "working";
-      //header("location: Starter2.php?add=success");
+      header("location: Starter2.php?add=success");
     }
 
     else{
-      echo ("".mysqli_error($connection));
-      //header("location: Starter2.php?add=failed");
+      header("location: Starter2.php?add=failed");
     }
   }
 ?>
