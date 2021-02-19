@@ -26,7 +26,7 @@
     $SQLquery = "INSERT INTO teams (tname, memCount) VALUES ('$name', $memCount);";
     $QueryOut = mysqli_query($connection, $SQLquery);
 
-    
+
     if($QueryOut === true){
       header("location: Starter2.php?add=success");
     }

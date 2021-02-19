@@ -247,39 +247,57 @@ mysqli_close($dbc); // Close the database connection.
 						<h4>Edit which team?</h4>
 					</header>
 					<p>
-						<button onclick="document.getElementById('Prompt2').style.display='block'" class="w3-button w3-ripple w3-amber">Insert Team 1 Name Here</button>
-						<button onclick="document.getElementById('Prompt2').style.display='block'" class="w3-button w3-ripple w3-amber">Insert Team 2 Name Here</button>
+						<!-- Convert to DB calls -->
+          <?php
 
-						<!--prompt for editing the team-->
-						<div id="Prompt2" class="w3-modal">
-							<div class="w3-modal-content w3-animate-top w3-card-4" style="max-width:400px">
-								<header class="w3-container w3-indigo">
-									<span onclick="document.getElementById('Prompt2').style.display='none'" class="w3-button w3-indigo w3-xlarge w3-display-topright">&times;</span>
-									<h4>Edit this team?</h4>
-								</header>
-								<form class="w3-container w3-padding-16"">
-									<button class="w3-button w3-block w3-red w3-section w3-padding" type="submit">Yes</button>
+          $sqlHeader = ["Teams"];
+          $sqlQuery = "SELECT teams.tname AS 'name' FROM scoretracker.teams;";
 
-									<!--Insert php file here-->
+          $QueryOut = mysqli_Query($connection, $sqlQuery);
 
-									<button onclick="document.getElementById('Prompt2').style.display='none'" class="w3-button w3-block w3-blue w3-section w3-padding">No</button>
-								</form>
-							</div>
-						</div>
-					</p>
-				</div>
-			</div>
-		</div>
+          if(mysqli_num_rows($QueryOut) > 0) {
+          #get tabulated rows as arrays
+          $entry = 0;
+            while($activerow = mysqli_fetch_array($QueryOut)){
+              #feed data to an array variable
+              foreach($activerow as $key => $incomingvalue){
+                //echo $incomingvalue;
+                $Teams[$entry][$key] = $incomingvalue;
+              }
 
-		<!--Showing The Whole List of Teams-->
-		<div id="ShowTeam" class="w3-modal">
-			<div class="w3-modal-content w3-animate-zoom w3-card-4">
-				<div class="w3-container">
-					<header class="w3-container w3-indigo">
-						<span onclick="document.getElementById('ShowTeam').style.display='none'" class="w3-button w3-indigo w3-xlarge w3-display-topright">&times;</span>
-						<h4>Team List</h4>
-					</header>
-					<p>
+              $entry++;
+            }
+          }
+
+          #count data for table
+          $Cols = 1;
+          $Rows = mysqli_num_rows($QueryOut);
+
+          ?>
+
+          <table border = "10" cellspacing = "30" cellpadding = "20">
+            <!--This is how data is displayed, please make this look fancy @Dearie-->
+            <?php
+              echo "<tr>";
+              #Print out row headers
+              foreach ($sqlHeader as $out) {
+                  echo "<td>";
+                  echo $out;
+              }
+
+              for($row = 0; $row < $Rows; $row++){
+                echo "<tr>";
+                for($col = 0; $col < $Cols; $col++){
+                  echo "<td>";
+                  $NameOut = $Teams[$row][$col];
+                  echo "<a href='editTeam.php?edit={$NameOut}'>$NameOut</a>";
+                }
+              }
+            ?>
+          </table>
+				</p>
+
+
 					<?php
 						require_once 'sptr_mysqli_connect.php';
 
@@ -293,6 +311,26 @@ mysqli_close($dbc); // Close the database connection.
 					      echo "<p>Team was not found or not properly deleted</p>";
 					    }
 					  }
+
+						else if(isset($_GET["add"])){
+					    if($_GET["add"] == "success"){
+					      echo "<p>Team was successfully added</p>";
+					    }
+
+					    else if($_GET["add"] == "failure"){
+					      echo "<p>Team was not added or connection to DB was compromised</p>";
+					    }
+  					}
+
+						else if(isset($_GET["edit"])){
+					    if($_GET["edit"] == "success"){
+					      echo "<p>Team was successfully edited</p>";
+					    }
+
+					    else if($_GET["edit"] == "failure"){
+					      echo "<p>Team was not edited or connection to DB was compromised</p>";
+					    }
+				  	}
 
 						$sqlHeader = ["Teams"];
 						$sqlQuery = "SELECT teams.tname AS 'name' FROM scoretracker.teams;";
