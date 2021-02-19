@@ -12,7 +12,6 @@ $DBName = "scoretracker";
 
 $connection = mysqli_connect($DBServer, $DBUser, $DBPwd, $DBName);
 
-
 #$dbc = @mysqli_connect (DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 #if(!$dbc){

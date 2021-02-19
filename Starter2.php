@@ -153,27 +153,10 @@ mysqli_close($dbc); // Close the database connection.
 <body>
 	<div class="w3-container w3-amber">
 		<h2>Team Information</h2>
-		<button onclick="document.getElementById('AddTeam').style.display='block'" class="w3-button w3-indigo">Add Team</button>
+		<button onclick="location.href='addTeam.php'" class="w3-button w3-indigo">Add Team</button>
 		<button onclick="document.getElementById('RemoveTeam').style.display='block'" class="w3-button w3-indigo">Remove Team</button>
 		<button onclick="document.getElementById('EditTeam').style.display='block'" class="w3-button w3-indigo">Edit Team</button>
 		<button onclick="document.getElementById('ShowTeam').style.display='block'" class="w3-button w3-indigo">Show Team List</button>
-
-		<!--Adding an Existing Team-->
-		<div id="AddTeam" class="w3-modal">
-			<div class="w3-modal-content w3-animate-zoom w3-card-4">
-				<header class="w3-container w3-indigo">
-					<span onclick="document.getElementById('AddTeam').style.display='none'" class="w3-button w3-indigo w3-xlarge w3-display-topright">&times;</span>
-					<h4>Enter team or school name and number of members:</h4>
-				</header>
-				<form class="w3-container">
-					<p><input class="w3-input" type="text" required>
-					<label>Team/School Name</label></p>
-					<p><input class="w3-input" type="text" required>
-					<label>Number of Members</label></p>
-					<button class="w3-button w3-block w3-amber w3-section w3-padding" type="submit">Add Team</button>
-				</form>
-			</div>
-		</div>
 
 		<!--Removing an Existing Team-->
 		<div id="RemoveTeam" class="w3-modal">
