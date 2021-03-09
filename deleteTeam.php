@@ -1,19 +1,19 @@
 <?php
 
-require_once 'sptr_mysqli_connect.php';
+require_once 'includes/sptr_mysqli_connect.php';
 $NameOut = $_GET["remove"];
 
 echo $NameOut;
 
-//Delete team if ID exists
-$sqlQuery = "SELECT teams.TeamID AS 'IDToDelete' FROM teams WHERE teams.tname = '{$NameOut}';";
-$QueryOut = mysqli_Query($connection, $sqlQuery);
+
+$sqlQuery = "SELECT tc_table.tc_id AS 'IDToDelete' FROM tc_table WHERE tc_table.tc_name = '{$NameOut}';";
+$QueryOut = mysqli_Query($dbc, $sqlQuery);
 
 if(mysqli_num_rows($QueryOut) > 0) {
 #get tabulated rows as arrays
   $entry = 0;
     while($activerow = mysqli_fetch_array($QueryOut)){
-      #feed data to an array variable
+      #put data to an array variable
       foreach($activerow as $key => $incomingvalue){
         //echo $incomingvalue;
         $Teams[$entry][$key] = $incomingvalue;
@@ -23,18 +23,18 @@ if(mysqli_num_rows($QueryOut) > 0) {
    }
 }
 
-//This isn't particularly efficient...Too bad!
+
 $IDToDelete = (int)$Teams[0][0];
 
 echo $IDToDelete;
 
-$sqlQueryDel = "DELETE FROM teams WHERE teams.TeamID = '{$IDToDelete}';";
-$QueryCheck = mysqli_Query($connection, $sqlQueryDel);
+$sqlQueryDel = "DELETE FROM tc_table WHERE tc_table.tc_id = '{$IDToDelete}';";
+$QueryCheck = mysqli_Query($dbc, $sqlQueryDel);
 
 if($QueryCheck === true){
-  header("location: Starter2.php?delete=success");
+  header("location: Interim.php?delete=success");
 }
 
 else{
-  header("location: Starter2.php?delete=failed");
+  header("location: Interim.php?delete=failed");
 }
