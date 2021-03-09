@@ -69,7 +69,7 @@
 		<form class="w3-container" style="margin-left:10px;">
 			<p>
 				<input class="w3-radio" type="radio" name="timer_type" value="standard" checked>
-				<label>Timer     .</label>
+				<label>Stopwatch     .</label>
 					
 				<input class="w3-radio" type="radio" name="timer_type" value="countdown">
 				<label>Countdown</label>
@@ -80,7 +80,7 @@
 					<div class="w3-modal-content w3-animate-right w3-card-4"  style="width:300px;">
 						<header class="w3-container w3-indigo">
 							<span onclick="document.getElementById('Settings').style.display='none'" class="w3-button w3-indigo w3-xlarge w3-display-topright">&times;</span>
-							<h2>Set the starting time:</h2>
+							<h2>Set the time:</h2>
 						</header>
 						<div class="w3-margin">
 							<form class="w3-container">
@@ -106,8 +106,10 @@
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
 			<h5> Team 1 score </h5>
 		</div>
-		<div class="w3-container w3-third w3-center" style="margin:auto;padding:20px;">
-			<h5> vs </h5>
+		<div class="w3-container w3-third w3-border w3-center">
+			<button onclick="document.getElementById('Stop').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-stop"></i></button></a>
+			<button onclick="document.getElementById('Play').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-play"></i></button></a>
+			<button onclick="document.getElementById('Pause').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-pause"></i></button></a>
 		</div>
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
 			<h5> Team 2 score </h5>
