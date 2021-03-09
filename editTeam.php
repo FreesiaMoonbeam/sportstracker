@@ -1,13 +1,12 @@
 <?php
-require_once 'sptr_mysqli_connect.php';
-//This is not the best way to do this... Too Bad!
+require_once 'includes/sptr_mysqli_connect.php';
 session_start();
 if(isset($_GET["edit"])){
     $_SESSION["EditTeam"] = $_GET["edit"];
 }
 
 ?>
-
+<!--animation does NOT work, very bad :(-->
 <div id="AddTeam" class="w3-modal">
   <div class="w3-modal-content w3-animate-zoom w3-card-4">
     <header class="w3-container w3-indigo">
@@ -28,16 +27,16 @@ if(isset($_GET["EditTeam"])){
   $NewName = $_GET["EditName"];
   echo $NewName;
 
-  //Ask for ID to edit and pray it exists
+  
   $NameOut = $_SESSION["EditTeam"];
-  $sqlQuery = "SELECT teams.TeamID AS 'IDToDelete' FROM teams WHERE teams.tname = '{$NameOut}';";
-  $QueryOut = mysqli_Query($connection, $sqlQuery);
+  $sqlQuery = "SELECT tc_table.tc_ID AS 'IDToDelete' FROM tc_table WHERE tc_table.tc_name = '{$NameOut}';";
+  $QueryOut = mysqli_Query($dbc, $sqlQuery);
 
   if(mysqli_num_rows($QueryOut) > 0) {
   #get tabulated rows as arrays
     $entry = 0;
       while($activerow = mysqli_fetch_array($QueryOut)){
-        #feed data to an array variable
+        #put data to an array variable
         foreach($activerow as $key => $incomingvalue){
           //echo $incomingvalue;
           $Teams[$entry][$key] = $incomingvalue;
@@ -47,21 +46,18 @@ if(isset($_GET["EditTeam"])){
      }
   }
 
-  //This isn't particularly efficient...Too bad!
   $IDToEdit = (int)$Teams[0][0];
 
   echo $IDToEdit;
 
-  //using the ID, make the magic mySQL query go brrrrrrrrr
-  $sqlQueryEdt = "UPDATE teams SET teams.tname = '{$NewName}' WHERE teams.TeamID = '{$IDToEdit}';";
-  $QueryCheck = mysqli_Query($connection, $sqlQueryEdt);
+  $sqlQueryEdt = "UPDATE tc_table SET tc_table.tc_name = '{$NewName}' WHERE tc_table.tc_id = '{$IDToEdit}';";
+  $QueryCheck = mysqli_Query($dbc, $sqlQueryEdt);
 
   if($QueryCheck === true){
-    header("location: Starter2.php?edit=success");
+    header("location: Interim.php?edit=success");
   }
-
   else{
-    header("location: Starter2.php?edit=failed");
+    header("location: Interim.php?edit=failed");
   }
 }
 ?>

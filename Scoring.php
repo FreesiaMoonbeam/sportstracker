@@ -35,7 +35,7 @@
 			<button onclick="window.location.reload();" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-refresh"></i></button></a>
 		</div>
 	</div>
-	
+
 	<hr>
 
 	<div class="w3-container">
@@ -70,12 +70,11 @@
 			<p>
 				<input class="w3-radio" type="radio" name="timer_type" value="standard" checked>
 				<label>Stopwatch     .</label>
-					
 				<input class="w3-radio" type="radio" name="timer_type" value="countdown">
 				<label>Countdown</label>
-				
+
 				<button onclick="document.getElementById('Settings').style.display='block'" class="w3-bar-item w3-button w3-xlarge w3-right"><i class="fa fa-cog"></i></button></a>
-				
+
 				<div id="Settings" class="w3-modal">
 					<div class="w3-modal-content w3-animate-right w3-card-4"  style="width:300px;">
 						<header class="w3-container w3-indigo">
@@ -84,11 +83,11 @@
 						</header>
 						<div class="w3-margin">
 							<form class="w3-container">
-								<p><input class="w3-input" type="number" name="sec" min="10" max="60"required>
+								<p id="seconds"><input class="w3-input" type="number" name="sec" min="10" max="60"required>
 								<label>Seconds</label></p>
-								<p><input class="w3-input" type="number" name="min" min="0" max="60">
+								<p id="minutes"><input class="w3-input" type="number" name="min" min="0" max="60">
 								<label>Minutes</label></p>
-								<p><input class="w3-input" type="number" name="hours" min="0" max="250">
+								<p id="hours"><input class="w3-input" type="number" name="hours" min="0" max="250">
 								<label>Hours</label></p>
 								<button class="w3-button w3-block w3-amber w3-section w3-padding" type="submit">Set Time</button>
 							</form>
@@ -98,9 +97,9 @@
 			</p>
 		</form>
 	</div>
-	
+
 	<div class="w3-container w3-border w3-center" style="margin:auto;margin-top:10px;width:500px;padding:75px;">
-		<h3> Timer Here </h3> <!--Remove Padding^ for actual code!-->
+		<h3 id="timer"> Timer Here </h3> <!--Remove Padding^ for actual code!-->
 	</div>
 	<div class="w3-row" style="margin:auto;width:750px;margin-top:50px;">
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
@@ -150,27 +149,54 @@
 <!-- End page content -->
 
 <script>
-// Get the Sidebar
-var mySidebar = document.getElementById("mySidebar");
+const urldata = window.location.search;
+const parseData = new URLSearchParams(urldata);
 
-// Get the DIV with overlay effect
-var overlayBg = document.getElementById("myOverlay");
+//This is lazy implementation... Too Bad!
+if(parseData.get('sec')){
+	// Get the current date to start from
+	var countDownDate = new Date().getTime();
 
-// Toggle between showing and hiding the sidebar, and add overlay effect
-function w3_open() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-    overlayBg.style.display = "none";
-  } else {
-    mySidebar.style.display = 'block';
-    overlayBg.style.display = "block";
-  }
-}
+	//grab time sets from URL
+	const urldata = window.location.search;
+	const parseData = new URLSearchParams(urldata);
+	const secs = parseInt(parseData.get('sec'));
+	const mins = parseInt(parseData.get('min'));
+	const hour = parseInt(parseData.get('hours'));
 
-// Close the sidebar with the close button
-function w3_close() {
-  mySidebar.style.display = "none";
-  overlayBg.style.display = "none";
+	//set increment depending on the user inputs
+	var seconds = secs * 1000;
+	var minutes = mins * 60000;
+	var hours = hour * 3600000;
+
+	//Add increment to current date
+	countDownDate = countDownDate + seconds + minutes + hours;
+
+	// Update the count down every 1 second
+	var x = setInterval(function() {
+		console.log("called");
+	  // Get today's date and time
+	  var now = new Date().getTime();
+
+	  // Find the distance between now and the count down date
+	  var distance = countDownDate - now;
+
+	  // Time calculations for days, hours, minutes and seconds
+	  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+	  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+	  // Display the result in the element with id="demo"
+	  document.getElementById("timer").innerHTML = days + "d " + hours + "h "
+	  + minutes + "m " + seconds + "s ";
+
+	  // If the count down is finished, write some text
+	  if (distance < 0) {
+	    clearInterval(x);
+	    document.getElementById("timer").innerHTML = "EXPIRED";
+	  }
+	}, 1000);
 }
 </script>
 
