@@ -65,30 +65,42 @@
 
 <!--START Actual Page Layout-->
 <body>
-	<div class="w3-container">
-  <h2>Striped Table</h2>
-  <p>The w3-striped class adds zebra-stripes to a table:</p>
-
-  <table class="w3-table w3-striped w3-bordered">
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Points</th>
+<div class="w3-container">
+  <table class="w3-centered w3-table-all">
+    <tr class="w3-indigo">
+      <th><h4>Points</h4></th>
+      <th><h4>Team 1</h4></th>
+	  <th></th>
+      <th><h4>Team 2</h4></th>
+	  <th><h4>Points</h4></th>
     </tr>
     <tr>
-      <td>Jill</td>
-      <td>Smith</td>
-      <td>50</td>
+      <td>30</td>
+      <td class="w3-green">Winning Team</td>
+      <td></td>
+	  <td class="w3-red">Losing Team</td>
+	  <td>21</td>
     </tr>
     <tr>
-      <td>Eve</td>
-      <td>Jackson</td>
-      <td>94</td>
+      <td>32</td>
+      <td class="w3-red">Losing Team</td>
+      <td></td>
+	  <td class="w3-green">Winning Team</td>
+	  <td>35</td>
     </tr>
     <tr>
-      <td>Adam</td>
-      <td>Johnson</td>
-      <td>67</td>
+      <td>29</td>
+      <td class="w3-khaki">Tied</td>
+      <td></td>
+	  <td class="w3-khaki">Tied</td>
+	  <td>29</td>
+    </tr>
+	<tr>
+      <td>0</td>
+      <td class="w3-brown">Winning Team</td>
+      <td></td>
+	  <td class="w3-brown">Losing Team</td>
+	  <td>0</td>
     </tr>
   </table>
 </div>

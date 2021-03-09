@@ -65,6 +65,7 @@
 
 <!--START Actual Page Layout-->
 <body>
+	<div class="w3-row">
 		<form class="w3-container" style="margin-left:10px;">
 			<p>
 				<input class="w3-radio" type="radio" name="timer_type" value="standard" checked>
@@ -72,8 +73,32 @@
 					
 				<input class="w3-radio" type="radio" name="timer_type" value="countdown">
 				<label>Countdown</label>
+				
+				<button onclick="document.getElementById('Settings').style.display='block'" class="w3-bar-item w3-button w3-xlarge w3-right"><i class="fa fa-cog"></i></button></a>
+				
+				<div id="Settings" class="w3-modal">
+					<div class="w3-modal-content w3-animate-right w3-card-4"  style="width:300px;">
+						<header class="w3-container w3-indigo">
+							<span onclick="document.getElementById('Settings').style.display='none'" class="w3-button w3-indigo w3-xlarge w3-display-topright">&times;</span>
+							<h2>Set the starting time:</h2>
+						</header>
+						<div class="w3-margin">
+							<form class="w3-container">
+								<p><input class="w3-input" type="number" name="sec" min="10" max="60"required>
+								<label>Seconds</label></p>
+								<p><input class="w3-input" type="number" name="min" min="0" max="60">
+								<label>Minutes</label></p>
+								<p><input class="w3-input" type="number" name="hours" min="0" max="250">
+								<label>Hours</label></p>
+								<button class="w3-button w3-block w3-amber w3-section w3-padding" type="submit">Set Time</button>
+							</form>
+						</div>
+					</div>
+				</div>
 			</p>
 		</form>
+	</div>
+	
 	<div class="w3-container w3-border w3-center" style="margin:auto;margin-top:10px;width:500px;padding:75px;">
 		<h3> Timer Here </h3> <!--Remove Padding^ for actual code!-->
 	</div>
