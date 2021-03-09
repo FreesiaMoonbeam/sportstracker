@@ -90,7 +90,7 @@
 								<label>Minutes</label></p>
 								<p id="hours"><input class="w3-input" type="number" name="hours" min="0" max="250">
 								<label>Hours</label></p>
-								<button class="w3-button w3-block w3-amber w3-section w3-padding" type="submit" onclick="startTimer()">Set Time</button>
+								<button class="w3-button w3-block w3-amber w3-section w3-padding" type="submit">Set Time</button>
 							</form>
 						</div>
 					</div>
@@ -148,42 +148,32 @@
 <!-- End page content -->
 
 <script>
-// Get the current date to start from
-var countDownDate = new Date().getTime();
-
-//grab game from URL
 const urldata = window.location.search;
 const parseData = new URLSearchParams(urldata);
-const game = parseData.get('game');
 
-//set increment depending on the game
-if(game === 'basketball'){
-	var timeAdded = 4800000;
-}
-else if(game === 'volleyball'){
-	var timeAdded = 6000000;
-}
-else if(game === 'soccer'){
-	var timeAdded = 9000000;
-}
-else if(game === 'badminton'){
-	var timeAdded = 4500000;
-}
-else if(game === 'tennis'){
-	var timeAdded = 4500000;
-}
-else{
-	var timeAdded = 0;
-}
+//This is lazy implementation... Too Bad!
+if(parseData.get('sec')){
+	// Get the current date to start from
+	var countDownDate = new Date().getTime();
 
-countDownDate = countDownDate + timeAdded;
+	//grab time sets from URL
+	const urldata = window.location.search;
+	const parseData = new URLSearchParams(urldata);
+	const secs = parseInt(parseData.get('sec'));
+	const mins = parseInt(parseData.get('min'));
+	const hour = parseInt(parseData.get('hours'));
 
-//invoke the timer
-function startTimer(){
-	console.log("called");
+	//set increment depending on the user inputs
+	var seconds = secs * 1000;
+	var minutes = mins * 60000;
+	var hours = hour * 3600000;
+
+	//Add increment to current date
+	countDownDate = countDownDate + seconds + minutes + hours;
+
 	// Update the count down every 1 second
 	var x = setInterval(function() {
-
+		console.log("called");
 	  // Get today's date and time
 	  var now = new Date().getTime();
 
