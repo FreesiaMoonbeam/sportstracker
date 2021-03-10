@@ -170,7 +170,15 @@ if(parseData.get('sec')){
 	var hours = hour * 3600000;
 
 	//Add increment to current date
-	countDownDate = countDownDate + seconds + minutes + hours;
+	if(!Number.isNaN(seconds)){
+			countDownDate = countDownDate + seconds;
+	}
+	if(!Number.isNaN(minutes)){
+			countDownDate = countDownDate + minutes;
+	}
+	if(!Number.isNaN(hours)){
+			countDownDate = countDownDate + hours;
+	}
 
 	// Update the count down every 1 second
 	var x = setInterval(function() {
