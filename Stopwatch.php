@@ -72,7 +72,7 @@
 	</div>
 	<div class="w3-row" style="margin:auto;width:750px;margin-top:50px;">
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
-			<h5> Team 1 score </h5>
+			<h5 id="Display1">0</h5>
 		</div>
 		<div class="w3-container w3-third w3-center">
 			<button onclick="document.getElementById('Stop').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-stop"></i></button></a>
@@ -80,20 +80,19 @@
 			<button onclick="document.getElementById('Pause').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-pause"></i></button></a>
 		</div>
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
-			<h5> Team 2 score </h5>
-			
+			<h5 id="Display2">0</h5>
 		</div>
 	</div>
 	<div class="w3-row" style="margin:auto;width:750px;margin-top:15px;">
 		<div class="w3-row w3-container w3-third" style="margin:auto;padding:10px;">
 			<div class="w3-third w3-center">
-				<button class="w3-button w3-hover-red w3-border w3-border-red w3-round-xxlarge"><h4>-</h4></button>
+				<button onclick="subtract(1)" class="w3-button w3-hover-red w3-border w3-border-red w3-round-xxlarge"><h4>-</h4></button>
 			</div>
 			<div class="w3-third w3-center">
 				<h6> Team 1 name </h6>
 			</div>
 			<div class="w3-third w3-center">
-				<button class="w3-button w3-hover-green w3-border w3-border-green w3-round-xxlarge"><h4>+</h4></button>
+				<button onclick="add(1)" class="w3-button w3-hover-green w3-border w3-border-green w3-round-xxlarge"><h4>+</h4></button>
 			</div>
 		</div>
 		<div class="w3-container w3-third w3-center" style="margin:auto;padding:10px;">
@@ -101,13 +100,13 @@
 		</div>
 		<div class="w3-row w3-container w3-third" style="margin:auto;padding:10px;">
 			<div class="w3-third w3-center">
-				<button class="w3-button w3-hover-red w3-border w3-border-red w3-round-xxlarge"><h4>-</h4></button>
+				<button onclick="subtract(2)" class="w3-button w3-hover-red w3-border w3-border-red w3-round-xxlarge"><h4>-</h4></button>
 			</div>
 			<div class="w3-third w3-center">
 				<h6> Team 2 name </h6>
 			</div>
 			<div class="w3-third w3-center">
-				<button class="w3-button w3-hover-green w3-border w3-border-green w3-round-xxlarge"><h4>+</h4></button>
+				<button onclick="add(2)" class="w3-button w3-hover-green w3-border w3-border-green w3-round-xxlarge"><h4>+</h4></button>
 			</div>
 		</div>
 	</div>
@@ -119,6 +118,32 @@
 <!-- End page content -->
 
 <script>
+var score1=0;
+var score2=0;
+function add(TeamNum){
+	if (TeamNum == 1){
+		score1=score1+1;
+		document.getElementById("Display1").innerHTML = ": "+score1+" :";
+	}
+	if (TeamNum == 2){
+		score2=score2+1;
+		document.getElementById("Display2").innerHTML = ": "+score2+" :";
+	}
+}
+function subtract(TeamNum){
+	if (TeamNum == 1){
+		if (score1 > 0){
+			score1=score1-1;
+			document.getElementById("Display1").innerHTML = ": "+score1+" :";
+		}
+	}
+	if (TeamNum == 2){
+		if (score2 > 0){
+			score2=score2-1;
+			document.getElementById("Display2").innerHTML = ": "+score2+" :";
+		}
+	}
+}
 const urldata = window.location.search;
 const parseData = new URLSearchParams(urldata);
 //This is lazy implementation... Too Bad!
