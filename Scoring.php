@@ -212,13 +212,16 @@ if(parseData.get('sec')){
 //This functions needs to get the team names from somewhere suggested: The URL where the team names are
 function sendResults(){
 	//Get team names here
-	var Team1Name = "Potato";
-	var Team2Name = "Tomato";
+	var Team1Name = "Stark Wolves";
+	var Team2Name = "Tyrell Roses";
 
 	//Set score from your implementation here
-	var Team1Score = 10;
-	var Team2Score = 20;
-	window.location.href='Results.php?Team1Name=Potato&Team2Name=Tomato&Team1Points=10&Team2Points=20'
+	var Team1Score = 30;
+	var Team2Score = 30;
+
+	//Not sure if this works but you HAVE to navigate to the results.php from here
+	//Using the ` or back-tick symbol allows us to embed variables into the string expression
+	window.location.href=`Results.php?Team1Name=${Team1Name}&Team2Name=${Team2Name}&Team1Points=${Team1Score}&Team2Points=${Team2Score}`;
 }
 </script>
 
