@@ -98,9 +98,8 @@
 			<h5 id="Display1">0</h5>
 		</div>
 		<div class="w3-container w3-third w3-center">
-			<button onclick="document.getElementById('Stop').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-stop"></i></button></a>
-			<button onclick="document.getElementById('Play').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-play"></i></button></a>
-			<button onclick="document.getElementById('Pause').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-pause"></i></button></a>
+			<button onclick="stop()" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-stop"></i></button></a>
+			<button onclick="reset()" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-pause"></i></button></a>
 		</div>
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
 			<h5 id="Display2">0</h5>
@@ -119,7 +118,7 @@
 			</div>
 		</div>
 		<div class="w3-container w3-third w3-center" style="margin:auto;padding:10px;">
-			<button class="w3-btn w3-hover-yellow w3-border w3-border-yellow w3-ripple w3-round-xxlarge"><h6>Submit Scores</h6></button>
+			<button onclick="#" class="w3-btn w3-hover-yellow w3-border w3-border-yellow w3-ripple w3-round-xxlarge"><h6>Submit Scores</h6></button>
 		</div>
 		<div class="w3-row w3-container w3-third" style="margin:auto;padding:10px;">
 			<div class="w3-third w3-center">
@@ -202,19 +201,44 @@ if(parseData.get('sec')){
 	  // Find the distance between now and the count down date
 	  var distance = countDownDate - now;
 	  // Time calculations for days, hours, minutes and seconds
-	  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
 	  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 	  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 	  // Display the result in the element with id="timer"
-	  document.getElementById("timer").innerHTML = days + "d " + hours + "h "
-	  + minutes + "m " + seconds + "s ";
+	  document.getElementById("timer").innerHTML = hours + " : "
+	  + minutes + " : " + seconds;
 	  // If the count down is finished, write some text
 	  if (distance < 0) {
 	    clearInterval(x);
 	    document.getElementById("timer").innerHTML = "Time's Up!";
 	  }
 	}, 1000);
+	
+	function stop() {
+		clearInterval(x);
+	} /* Stop */
+
+	var seconds = 0;
+	var minutes = 0; /* holds incrementing value */
+	var hours = 0;
+
+}
+	function checkTime(i) {
+		if (i < 10) {
+			i = "0" + i;
+		}
+	return i;
+	}
+
+	function reset() {
+	/*Reset*/
+	seconds = 0;
+	minutes = 0;
+	hours = 0
+
+	document.getElementById("seconds").innerHTML = "00";
+	document.getElementById("minutes").innerHTML = "00";
+	document.getElementById("hours").innerHTML = "00";
 }
 </script>
 

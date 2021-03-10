@@ -68,16 +68,21 @@
 			</div>
 	</div>
 	<div class="w3-container w3-border w3-center" style="margin:auto;margin-top:10px;width:500px;padding:75px;">
-		<h3 id="timer"> Timer Here </h3> <!--Remove Padding^ for actual code!-->
+		<h3>
+			<span id="hour">00</span> :
+			<span id="min">00</span> :
+			<span id="sec">00</span> :
+			<span id="milisec">00</span>
+		</h3>
 	</div>
 	<div class="w3-row" style="margin:auto;width:750px;margin-top:50px;">
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
 			<h5 id="Display1">0</h5>
 		</div>
 		<div class="w3-container w3-third w3-center">
-			<button onclick="document.getElementById('Stop').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-stop"></i></button></a>
-			<button onclick="document.getElementById('Play').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-play"></i></button></a>
-			<button onclick="document.getElementById('Pause').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-pause"></i></button></a>
+			<button onclick="startStop(2)" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-stop"></i></button></a>
+			<button onclick="startStop(1)" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-play"></i></button></a>
+			<button onclick="reset()" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-retweet"></i></button></a>
 		</div>
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
 			<h5 id="Display2">0</h5>
@@ -144,52 +149,103 @@ function subtract(TeamNum){
 		}
 	}
 }
-const urldata = window.location.search;
-const parseData = new URLSearchParams(urldata);
-//This is lazy implementation... Too Bad!
-if(parseData.get('sec')){
-	// Get the current date to start from
-	var countDownDate = new Date().getTime();
-	//grab time sets from URL
-	const urldata = window.location.search;
-	const parseData = new URLSearchParams(urldata);
-	const secs = parseInt(parseData.get('sec'));
-	const mins = parseInt(parseData.get('min'));
-	const hour = parseInt(parseData.get('hours'));
-	//set increment depending on the user inputs
-	var seconds = secs * 1000;
-	var minutes = mins * 60000;
-	var hours = hour * 3600000;
-	if(typeof secs != Null){
-		countDownDate = countDownDate + seconds;
-	}
-	if(typeof min != Null){
-		countDownDate = countDownDate + minutes;
-	}
-	if(typeof hours != Null){
-		countDownDate = countDownDate + hours;
-	}
-	// Update the count down every 1 second
-	var x = setInterval(function() {
-		console.log("called");
-	  // Get today's date and time
-	  var now = new Date().getTime();
-	  // Find the distance between now and the count down date
-	  var distance = countDownDate - now;
-	  // Time calculations for days, hours, minutes and seconds
-	  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-	  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-	  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-	  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-	  // Display the result in the element with id="timer"
-	  document.getElementById("timer").innerHTML = days + "d " + hours + "h "
-	  + minutes + "m " + seconds + "s ";
-	  // If the count down is finished, write some text
-	  if (distance < 0) {
-	    clearInterval(x);
-	    document.getElementById("timer").innerHTML = "Time's Up!";
-	  }
-	}, 1000);
+var loop;
+
+function startStop(state) { /* Toggle StartStop */
+
+  if (state === 1) {
+    start();
+  } else if (state === 2) {
+    stop();
+  }
+
+}
+
+
+function start() {
+  loop = setInterval(timer, 10);
+} /* Start */
+
+function stop() {
+  clearInterval(loop);
+} /* Stop */
+
+var milisec = 0;
+var sec = 0; /* holds incrementing value */
+var min = 0;
+var hour = 0;
+
+/* Contains and outputs returned value of  function checkTime */
+
+var miliSecOut = 0;
+var secOut = 0;
+var minOut = 0;
+var hourOut = 0;
+
+/* Output variable End */
+
+
+function timer() {
+  /* Main Timer */
+
+
+  miliSecOut = checkTime(milisec);
+  secOut = checkTime(sec);
+  minOut = checkTime(min);
+  hourOut = checkTime(hour);
+
+  milisec = ++milisec;
+
+  if (milisec === 100) {
+    milisec = 0;
+    sec = ++sec;
+  }
+
+  if (sec == 60) {
+    min = ++min;
+    sec = 0;
+  }
+
+  if (min == 60) {
+    min = 0;
+    hour = ++hour;
+
+  }
+
+
+  document.getElementById("milisec").innerHTML = miliSecOut;
+  document.getElementById("sec").innerHTML = secOut;
+  document.getElementById("min").innerHTML = minOut;
+  document.getElementById("hour").innerHTML = hourOut;
+
+}
+
+
+/* Adds 0 when value is <10 */
+
+
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
+function reset() {
+
+
+  /*Reset*/
+
+  milisec = 0;
+  sec = 0;
+  min = 0
+  hour = 0;
+
+  document.getElementById("milisec").innerHTML = "00";
+  document.getElementById("sec").innerHTML = "00";
+  document.getElementById("min").innerHTML = "00";
+  document.getElementById("hour").innerHTML = "00";
+
 }
 </script>
 
