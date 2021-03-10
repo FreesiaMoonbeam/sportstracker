@@ -127,7 +127,9 @@
 			</div>
 		</div>
 		<div class="w3-container w3-third w3-center" style="margin:auto;padding:10px;">
-			<button class="w3-btn w3-hover-yellow w3-border w3-border-yellow w3-ripple w3-round-xxlarge"><h6>Submit Scores</h6></button>
+
+		<button onclick="sendResults()" class='w3-btn w3-hover-yellow w3-border w3-border-yellow w3-ripple w3-round-xxlarge'><h6>Submit Scores</h6></button>
+
 		</div>
 		<div class="w3-row w3-container w3-third" style="margin:auto;padding:10px;">
 			<div class="w3-third w3-center">
@@ -205,6 +207,18 @@ if(parseData.get('sec')){
 	    document.getElementById("timer").innerHTML = "EXPIRED";
 	  }
 	}, 1000);
+}
+
+//This functions needs to get the team names from somewhere suggested: The URL where the team names are
+function sendResults(){
+	//Get team names here
+	var Team1Name = "Potato";
+	var Team2Name = "Tomato";
+
+	//Set score from your implementation here
+	var Team1Score = 10;
+	var Team2Score = 20;
+	window.location.href='Results.php?Team1Name=Potato&Team2Name=Tomato&Team1Points=10&Team2Points=20'
 }
 </script>
 

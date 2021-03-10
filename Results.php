@@ -35,7 +35,7 @@
 			<button onclick="window.location.reload();" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-refresh"></i></button></a>
 		</div>
 	</div>
-	
+
 	<hr>
 
 	<div class="w3-container">
@@ -45,8 +45,8 @@
 	<div class="w3-bar-block">
 		<a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp; Close Menu</a>
 		<a href="overview.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
-		<a href="Stopwatch.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-clock-o fa-fw"></i>&nbsp; Scoring</a>
-		<a href="Interim.php" class="w3-bar-item w3-button w3-padding "><i class="fa fa-bars fa-fw"></i>&nbsp; Team Composition</a>
+		<a href="Scoring.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-clock-o fa-fw"></i>&nbsp; Scoring</a>
+		<a href="team_composition.php" class="w3-bar-item w3-button w3-padding "><i class="fa fa-bars fa-fw"></i>&nbsp; Team Composition</a>
 		<a href="Results.php" class="w3-bar-item w3-button w3-padding w3-indigo"><i class="fa fa-trophy fa-fw"></i>&nbsp; Results</a>
 	</div>
 </nav>
@@ -68,40 +68,74 @@
 <div class="w3-container">
   <table class="w3-centered w3-table-all">
     <tr class="w3-indigo">
-      <th><h4>Points</h4></th>
-      <th><h4>Team 1</h4></th>
+			<th><h4>Points</h4></th>
+			<?php
+				//Get the URL data... if it exists . w.
+				$Team1Name = "Team 1 Name";
+				if(isset($_GET["Team1Name"])){
+					$Team1Name = $_GET["Team1Name"];
+				}
+
+				//Wtf is this command line?
+				//It works sush!
+				echo "<th>"."<h4>"."{$Team1Name}"."</h4>"."</th>";
+			?>
 	  <th></th>
-      <th><h4>Team 2</h4></th>
+
+		<?php
+
+			$Team2Name = "Team 2 Name";
+			if(isset($_GET["Team2Name"])){
+				$Team2Name = $_GET["Team2Name"];
+			}
+
+			echo "<th>"."<h4>"."{$Team2Name}"."</h4>"."</th>";
+		?>
 	  <th><h4>Points</h4></th>
     </tr>
     <tr>
-      <td>30</td>
-      <td class="w3-green">Winning Team</td>
-      <td></td>
-	  <td class="w3-red">Losing Team</td>
-	  <td>21</td>
-    </tr>
-    <tr>
-      <td>32</td>
-      <td class="w3-red">Losing Team</td>
-      <td></td>
-	  <td class="w3-green">Winning Team</td>
-	  <td>35</td>
-    </tr>
-    <tr>
-      <td>29</td>
-      <td class="w3-khaki">Tied</td>
-      <td></td>
-	  <td class="w3-khaki">Tied</td>
-	  <td>29</td>
-    </tr>
-	<tr>
-      <td>0</td>
-      <td class="w3-brown">Winning Team</td>
-      <td></td>
-	  <td class="w3-brown">Losing Team</td>
-	  <td>0</td>
-    </tr>
+			<?php
+				$Team1Points = 0;
+
+				if(isset($_GET["Team1Points"])){
+					$Team1Points = $_GET["Team1Points"];
+				}
+
+				$Team2Points = 0;
+
+				if(isset($_GET["Team2Points"])){
+					$Team2Points = $_GET["Team2Points"];
+				}
+
+				//If team 1 won
+				if($Team1Points > $Team2Points){
+					echo "<td>{$Team1Points}</td>";
+					echo "<td class='w3-green'>Winning Team</td>";
+					echo "<td></td>";
+					echo "<td class='w3-red'>Losing Team</td>";
+					echo "<td>{$Team2Points}</td>";
+				}
+
+				//If team 2 won
+				else if($Team1Points < $Team2Points){
+					echo "<td>{$Team1Points}</td>";
+					echo "<td class='w3-red'>Losing Team</td>";
+					echo "<td></td>";
+					echo "<td class='w3-green'>Winning Team</td>";
+					echo "<td>{$Team2Points}</td>";
+				}
+
+				//Tie or inconclusive
+				else{
+					echo "<td>{$Team1Points}</td>";
+					echo "<td class='w3-khaki'>Winning Team</td>";
+					echo "<td></td>";
+					echo "<td class='w3-khaki'>Losing Team</td>";
+					echo "<td>{$Team2Points}</td>";
+				}
+
+			?>
+		</tr>
   </table>
 </div>
 </body>
