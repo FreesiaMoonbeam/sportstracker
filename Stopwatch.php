@@ -63,40 +63,16 @@
 <body>
 	<div class="w3-bar w3-border w3-light-grey">
 				<div class="w3-bar w3-border w3-amber">
-					<a href="Stopwatch.php" class="w3-bar-item w3-button">Stopwatch</a>
-					<a href="Countdown.php" class="w3-bar-item w3-button w3-indigo">Countdown</a>
-				</div>
-		</form>
+					<a href="Stopwatch.php" class="w3-bar-item w3-button w3-indigo">Stopwatch</a>
+					<a href="Countdown.php" class="w3-bar-item w3-button">Countdown</a>
+			</div>
 	</div>
 	<div class="w3-container w3-border w3-center" style="margin:auto;margin-top:10px;width:500px;padding:75px;">
 		<h3 id="timer"> Timer Here </h3> <!--Remove Padding^ for actual code!-->
 	</div>
-	<div class="w3-container w3-center">
-	<button onclick="document.getElementById('Settings').style.display='block'" class="w3-button w3-xlarge w3-center"><i class="fa fa-cog"></i></button></a>
-		
-		<div id="Settings" class="w3-modal">
-			<div class="w3-modal-content w3-animate-zoom w3-card-4"  style="width:300px;">
-				<header class="w3-container w3-indigo">
-					<span onclick="document.getElementById('Settings').style.display='none'" class="w3-button w3-indigo w3-xlarge w3-display-topright">&times;</span>
-					<h2>Set the time:</h2>
-				</header>
-				<div class="w3-margin">
-					<form class="w3-container">
-						<p id="seconds"><input class="w3-input" type="number" name="sec" min="1" max="60"required>
-						<label>Seconds</label></p>
-						<p id="minutes"><input class="w3-input" type="number" name="min" min="0" max="60">
-						<label>Minutes</label></p>
-						<p id="hours"><input class="w3-input" type="number" name="hours" min="0" max="250">
-						<label>Hours</label></p>
-						<button class="w3-button w3-block w3-amber w3-section w3-padding" type="submit">Set Time</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="w3-row" style="margin:auto;width:750px;margin-top:10px;">
+	<div class="w3-row" style="margin:auto;width:750px;margin-top:50px;">
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
-			<h5 id="Display1"> Team 1 score </h5>
+			<h5> Team 1 score </h5>
 		</div>
 		<div class="w3-container w3-third w3-center">
 			<button onclick="document.getElementById('Stop').style.display='block'" class="w3-bar-item w3-button w3-xlarge"><i class="fa fa-stop"></i></button></a>
@@ -105,6 +81,7 @@
 		</div>
 		<div class="w3-container w3-third w3-border w3-center" style="margin:auto;padding:20px;">
 			<h5> Team 2 score </h5>
+			
 		</div>
 	</div>
 	<div class="w3-row" style="margin:auto;width:750px;margin-top:15px;">
@@ -145,50 +122,50 @@
 const urldata = window.location.search;
 const parseData = new URLSearchParams(urldata);
 //This is lazy implementation... Too Bad!
-	if(parseData.get('sec')){
-		// Get the current date to start from
-		var countDownDate = new Date().getTime();
-		//grab time sets from URL
-		const urldata = window.location.search;
-		const parseData = new URLSearchParams(urldata);
-		const secs = parseInt(parseData.get('sec'));
-		const mins = parseInt(parseData.get('min'));
-		const hour = parseInt(parseData.get('hours'));
-		//set increment depending on the user inputs
-		var seconds = secs * 1000;
-		var minutes = mins * 60000;
-		var hours = hour * 3600000;
-		if(typeof secs != Null){
-			countDownDate = countDownDate + seconds;
-		}
-		if(typeof min != Null){
-			countDownDate = countDownDate + minutes;
-		}
-		if(typeof hours != Null){
-			countDownDate = countDownDate + hours;
-		}
-		// Update the count down every 1 second
-		var x = setInterval(function() {
-			console.log("called");
-		  // Get today's date and time
-		  var now = new Date().getTime();
-		  // Find the distance between now and the count down date
-		  var distance = countDownDate - now;
-		  // Time calculations for days, hours, minutes and seconds
-		  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-		  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-		  // Display the result in the element with id="demo"
-		  document.getElementById("timer").innerHTML = days + "d " + hours + "h "
-		  + minutes + "m " + seconds + "s ";
-		  // If the count down is finished, write some text
-		  if (distance < 0) {
-			clearInterval(x);
-			document.getElementById("timer").innerHTML = "Time's Up!";
-		  }
-		}, 1000);
+if(parseData.get('sec')){
+	// Get the current date to start from
+	var countDownDate = new Date().getTime();
+	//grab time sets from URL
+	const urldata = window.location.search;
+	const parseData = new URLSearchParams(urldata);
+	const secs = parseInt(parseData.get('sec'));
+	const mins = parseInt(parseData.get('min'));
+	const hour = parseInt(parseData.get('hours'));
+	//set increment depending on the user inputs
+	var seconds = secs * 1000;
+	var minutes = mins * 60000;
+	var hours = hour * 3600000;
+	if(typeof secs != Null){
+		countDownDate = countDownDate + seconds;
 	}
+	if(typeof min != Null){
+		countDownDate = countDownDate + minutes;
+	}
+	if(typeof hours != Null){
+		countDownDate = countDownDate + hours;
+	}
+	// Update the count down every 1 second
+	var x = setInterval(function() {
+		console.log("called");
+	  // Get today's date and time
+	  var now = new Date().getTime();
+	  // Find the distance between now and the count down date
+	  var distance = countDownDate - now;
+	  // Time calculations for days, hours, minutes and seconds
+	  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+	  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	  // Display the result in the element with id="timer"
+	  document.getElementById("timer").innerHTML = days + "d " + hours + "h "
+	  + minutes + "m " + seconds + "s ";
+	  // If the count down is finished, write some text
+	  if (distance < 0) {
+	    clearInterval(x);
+	    document.getElementById("timer").innerHTML = "Time's Up!";
+	  }
+	}, 1000);
+}
 </script>
 
 </body>
